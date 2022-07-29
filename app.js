@@ -2,7 +2,6 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const generatePage = require('./src/page-template');
 
-
 const promptUser = () => {
   return inquirer.prompt([
     {
@@ -18,7 +17,6 @@ const promptUser = () => {
         }
       }
     },
-
     {
       type: 'input',
       name: 'github',
@@ -32,7 +30,6 @@ const promptUser = () => {
         }
       }
     },
-
     {
       type: 'confirm',
       name: 'confirmAbout',
@@ -47,7 +44,6 @@ const promptUser = () => {
     }
   ]);
 };
-  
 
 const promptProject = portfolioData => {
   console.log(`
@@ -124,7 +120,7 @@ Add a New Project
       portfolioData.projects.push(projectData);
       if (projectData.confirmAddProject) {
         return promptProject(portfolioData);
-      } else {  
+      } else {
         return portfolioData;
       }
     });
@@ -133,8 +129,7 @@ Add a New Project
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
-    console.log(portfolioData);
-    const pageHTML = generatePage();
+    const pageHTML = generatePage(portfolioData);
 
     fs.writeFile('./index.html', pageHTML, err => {
       if (err) throw new Error(err);
